@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace GeekBrainsCardStorageService.Repository.Repository.Interface
 {
-    public interface IRepository<TEntity>
+    public interface IRepository<TEntity, TId>
     {
         Task<List<TEntity>> GetAll();
 
-        Task<TEntity> GetById(int id);
+        Task<TEntity> GetById(TId id);
 
         Task<TEntity> Create(TEntity entity);
 
         Task<TEntity> Update(TEntity entity);
 
-        Task Delete(int id);
+        Task<TEntity> Delete(TId id);
     }
 }

@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekBrainsCardStorageService", "GeekBrainsCardStorageService\GeekBrainsCardStorageService.csproj", "{3387E8EA-6C77-4C5B-8F5D-BC823F6E860F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeekBrainsCardStorageService", "GeekBrainsCardStorageService\GeekBrainsCardStorageService.csproj", "{3387E8EA-6C77-4C5B-8F5D-BC823F6E860F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekBrainsCardStorageService.Repository", "GeekBrainsCardStorageService.Repository\GeekBrainsCardStorageService.Repository.csproj", "{0EF93552-5981-4908-8751-9F57F8ABE266}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeekBrainsCardStorageService.Repository", "GeekBrainsCardStorageService.Repository\GeekBrainsCardStorageService.Repository.csproj", "{0EF93552-5981-4908-8751-9F57F8ABE266}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekBrainsCardStorageService.RepositoryDb", "GeekBrainsCardStorageService.RepositoryDb\GeekBrainsCardStorageService.RepositoryDb.csproj", "{83247475-C161-4263-8F2A-59BC20DD6E1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0EF93552-5981-4908-8751-9F57F8ABE266}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EF93552-5981-4908-8751-9F57F8ABE266}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EF93552-5981-4908-8751-9F57F8ABE266}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83247475-C161-4263-8F2A-59BC20DD6E1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83247475-C161-4263-8F2A-59BC20DD6E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83247475-C161-4263-8F2A-59BC20DD6E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83247475-C161-4263-8F2A-59BC20DD6E1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,6 +3,7 @@ using GeekBrainsCardStorageService.Models.Dto.Client.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace GeekBrainsCardStorageService.Controllers
@@ -11,6 +12,12 @@ namespace GeekBrainsCardStorageService.Controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
+        private readonly ILogger<ClientController> _logger;
+
+        public ClientController(ILogger<ClientController> logger)
+        {
+            _logger = logger;
+        }
 
         [HttpGet("")]
         [ProducesResponseType(typeof(DtoClientResponse), StatusCodes.Status200OK)]

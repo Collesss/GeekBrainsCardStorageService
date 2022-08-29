@@ -13,4 +13,8 @@
     <Folder Include="AutoMapperConfig\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GeekBrainsCardStorageService.Repository\GeekBrainsCardStorageService.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

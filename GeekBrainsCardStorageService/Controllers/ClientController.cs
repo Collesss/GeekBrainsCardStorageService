@@ -1,5 +1,6 @@
 ﻿using GeekBrainsCardStorageService.Models.Dto.Client.Request;
 using GeekBrainsCardStorageService.Models.Dto.Client.Response;
+using GeekBrainsCardStorageService.Repository.Repository.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -13,10 +14,12 @@ namespace GeekBrainsCardStorageService.Controllers
     public class ClientController : ControllerBase
     {
         private readonly ILogger<ClientController> _logger;
+        private readonly IRepositoryClient _repositoryClient;
 
-        public ClientController(ILogger<ClientController> logger)
+        public ClientController(ILogger<ClientController> logger, IRepositoryClient repositoryClient)
         {
             _logger = logger;
+            _repositoryClient = repositoryClient;
         }
 
         [HttpGet("")]

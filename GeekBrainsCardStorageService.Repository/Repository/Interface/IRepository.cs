@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GeekBrainsCardStorageService.Repository.Repository.Interface
+﻿namespace GeekBrainsCardStorageService.Repository.Repository.Interface
 {
     public interface IRepository<TEntity, TId>
     {

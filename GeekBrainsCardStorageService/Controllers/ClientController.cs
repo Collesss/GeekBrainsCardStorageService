@@ -29,14 +29,14 @@ namespace GeekBrainsCardStorageService.Controllers
         {
             try
             {
-
+                return Ok(_repositoryClient.GetAll());
             }
             catch (Exception e)
             {
                 return BadRequest(ModelState);
             }
 
-            return Ok(new DtoClientResponse[] { new DtoClientResponse() });
+            //return Ok(new DtoClientResponse[] { new DtoClientResponse() });
         }
 
         [HttpPost("")]

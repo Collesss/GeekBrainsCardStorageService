@@ -1,45 +1,52 @@
 ﻿using GeekBrainsCardStorageService.Repository.Data;
 using GeekBrainsCardStorageService.Repository.Repository.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace GeekBrainsCardStorageService.RepositoryDb.Repository.Implementation
 {
     public class RepositoryClient : IRepositoryClient
     {
         private readonly CardStorageServiceDbContext _dbContext;
+        private readonly ILogger _logger;
 
-        public RepositoryClient(CardStorageServiceDbContext dbContext)
+        public RepositoryClient(CardStorageServiceDbContext dbContext, ILogger<RepositoryClient> logger)
         {
-            _dbContext = dbContext;
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public Task<Client> Create(Client entity)
+        public async Task<Client> Create(Client entity)
         {
-            throw new NotImplementedException();
+            Client addedClient = (await _dbContext.Clients.AddAsync(entity)).Entity;
+
+            await _dbContext.SaveChangesAsync();
+
+            return addedClient;
         }
 
-        public Task<Client> Delete(int id)
+        public async Task<Client> Update(Client entity)
         {
-            throw new NotImplementedException();
+            Client updateClient = _dbContext.Clients.Update(entity).Entity;
+
+            await _dbContext.SaveChangesAsync();
+
+            return updateClient;
         }
 
-        public Task<List<Client>> GetAll()
+        public async Task<Client> Delete(int id)
         {
-            throw new NotImplementedException();
+            Client deleteClient = _dbContext.Clients.Remove(new Client { Id = id }).Entity;
+
+            await _dbContext.SaveChangesAsync();
+
+            return deleteClient;
         }
 
-        public Task<Client> GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<Client>> GetAll() =>
+            await _dbContext.Clients.ToListAsync();
 
-        public Task<Client> Update(Client entity)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Client> GetById(int id) =>
+            await _dbContext.Clients.FirstOrDefaultAsync(client => client.Id == id);
     }
 }

@@ -1,6 +1,9 @@
-﻿using GeekBrainsCardStorageService.Models.Dto.Card.Request;
+﻿using AutoMapper;
+using GeekBrainsCardStorageService.Models.Dto.Card.Request;
 using GeekBrainsCardStorageService.Models.Dto.Client.Response;
+using GeekBrainsCardStorageService.Repository.Data;
 using GeekBrainsCardStorageService.Repository.Repository.Interface;
+using GeekBrainsCardStorageService.RepositoryDb.Repository.Implementation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -15,11 +18,13 @@ namespace GeekBrainsCardStorageService.Controllers
     {
         private readonly ILogger<CardController> _logger;
         private readonly IRepositoryCard _repositoryCard;
+        private readonly IMapper _mapper;
 
-        public CardController(ILogger<CardController> logger, IRepositoryCard repositoryCard)
+        public CardController(ILogger<CardController> logger, IRepositoryCard repositoryCard, IMapper mapper)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _repositoryCard = repositoryCard ?? throw new ArgumentNullException(nameof(repositoryCard));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet("")]
@@ -29,15 +34,15 @@ namespace GeekBrainsCardStorageService.Controllers
         {
             try
             {
-
+                return Ok(_repositoryCard.GetAll().Result);
             }
             catch (Exception e)
             {
-
+                ModelState.AddModelError(null, e.Message);
                 return BadRequest(ModelState);
             }
 
-            return Ok(new DtoClientResponse[] { new DtoClientResponse() });
+            //return Ok(new DtoClientResponse[] { new DtoClientResponse() });
         }
 
         [HttpPost("")]
@@ -47,14 +52,15 @@ namespace GeekBrainsCardStorageService.Controllers
         {
             try
             {
-
+                return Ok(_repositoryCard.Create(_mapper.Map<Card>(card)).Result);
             }
             catch (Exception e)
             {
+                ModelState.AddModelError(null, e.Message);
                 return BadRequest(ModelState);
             }
 
-            return Ok(new DtoClientResponse());
+            //return Ok(new DtoClientResponse());
         }
 
         [HttpDelete("")]
@@ -68,6 +74,7 @@ namespace GeekBrainsCardStorageService.Controllers
             }
             catch (Exception e)
             {
+                ModelState.AddModelError(null, e.Message);
                 return BadRequest(ModelState);
             }
 

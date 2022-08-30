@@ -1,3 +1,6 @@
+using GeekBrainsCardStorageService.AutoMapperProfiles;
+using GeekBrainsCardStorageService.Repository.Repository.Interface;
+using GeekBrainsCardStorageService.RepositoryDb.Repository.Implementation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +29,15 @@ namespace GeekBrainsCardStorageService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(opts =>
+            {
+                opts.AddProfile<AutoMapperClientProfile>();
+                opts.AddProfile<AutoMapperCardProfile>();
+            });
+
+
+            services.AddScoped<IRepositoryClient, RepositoryClient>();
+            services.AddScoped<IRepositoryCard, RepositoryCard>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

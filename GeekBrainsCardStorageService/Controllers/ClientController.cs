@@ -19,9 +19,9 @@ namespace GeekBrainsCardStorageService.Controllers
         private readonly IRepositoryClient _repositoryClient;
         private readonly IMapper _mapper;
 
-        public ClientController(ILogger<ClientController> logger, IRepositoryClient repositoryClient, IMapper mapper)
+        public ClientController(/*ILogger<ClientController> logger, */IRepositoryClient repositoryClient, IMapper mapper)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger)) ;
+            //_logger = logger ?? throw new ArgumentNullException(nameof(logger)) ;
             _repositoryClient = repositoryClient ?? throw new ArgumentNullException(nameof(repositoryClient));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
@@ -29,7 +29,7 @@ namespace GeekBrainsCardStorageService.Controllers
         [HttpGet("")]
         [ProducesResponseType(typeof(DtoClientResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ModelStateDictionary))]
-        public IActionResult GetAllCard()
+        public IActionResult GetAllClient()
         {
             try
             {
@@ -37,7 +37,7 @@ namespace GeekBrainsCardStorageService.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError(null, e.Message);
+                ModelState.AddModelError(String.Empty, e.Message);
                 return BadRequest(ModelState);
             }
 
@@ -47,7 +47,7 @@ namespace GeekBrainsCardStorageService.Controllers
         [HttpPost("")]
         [ProducesResponseType(typeof(DtoClientResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ModelStateDictionary))]
-        public IActionResult CreateCard(DtoClientRequestCreate card)
+        public IActionResult CreateClient(DtoClientRequestCreate card)
         {
             try
             {
@@ -55,23 +55,23 @@ namespace GeekBrainsCardStorageService.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError(null, e.Message);
+                ModelState.AddModelError(String.Empty, e.Message);
                 return BadRequest(ModelState);
             }
         }
 
-        [HttpDelete("")]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(typeof(DtoClientResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ModelStateDictionary))]
-        public IActionResult DeleteCard(DtoClientRequestDelete card)
+        public IActionResult DeleteClient(int Id)
         {
             try
             {
-                return Ok(_repositoryClient.Delete(card.Id).Result);
+                return Ok(_repositoryClient.Delete(Id).Result);
             }
             catch (Exception e)
             {
-                ModelState.AddModelError(null, e.Message);
+                ModelState.AddModelError(String.Empty, e.Message);
                 return BadRequest(ModelState);
             }
         }

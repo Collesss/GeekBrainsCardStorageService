@@ -20,9 +20,9 @@ namespace GeekBrainsCardStorageService.Controllers
         private readonly IRepositoryCard _repositoryCard;
         private readonly IMapper _mapper;
 
-        public CardController(ILogger<CardController> logger, IRepositoryCard repositoryCard, IMapper mapper)
+        public CardController(/*ILogger<CardController> logger, */IRepositoryCard repositoryCard, IMapper mapper)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            //_logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _repositoryCard = repositoryCard ?? throw new ArgumentNullException(nameof(repositoryCard));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
@@ -38,7 +38,7 @@ namespace GeekBrainsCardStorageService.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError(null, e.Message);
+                ModelState.AddModelError(String.Empty, e.Message);
                 return BadRequest(ModelState);
             }
 
@@ -56,7 +56,7 @@ namespace GeekBrainsCardStorageService.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError(null, e.Message);
+                ModelState.AddModelError(String.Empty, e.Message);
                 return BadRequest(ModelState);
             }
 
@@ -66,19 +66,19 @@ namespace GeekBrainsCardStorageService.Controllers
         [HttpDelete("")]
         [ProducesResponseType(typeof(DtoClientResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ModelStateDictionary))]
-        public IActionResult DeleteCard(DtoCardRequestDelete card)
+        public IActionResult DeleteCard(Guid Id)
         {
             try
             {
-
+                return Ok(_repositoryCard.Delete(Id).Result);
             }
             catch (Exception e)
             {
-                ModelState.AddModelError(null, e.Message);
+                ModelState.AddModelError(String.Empty, e.Message);
                 return BadRequest(ModelState);
             }
 
-            return Ok(new DtoClientResponse());
+            //return Ok(new DtoClientResponse());
         }
     }
 }

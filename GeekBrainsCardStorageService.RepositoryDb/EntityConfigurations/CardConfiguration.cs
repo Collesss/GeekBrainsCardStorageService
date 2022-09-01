@@ -12,13 +12,17 @@ namespace GeekBrainsCardStorageService.RepositoryDb.EntityConfigurations
 
             builder.HasAlternateKey(card => card.CardNumber);
             builder.Property(card => card.CardNumber)
+                .IsRequired()
                 .HasMaxLength(20);
 
             builder.Property(card => card.Name)
+                .IsRequired()
                 .HasMaxLength(55);
             builder.HasIndex(card => card.Name);
 
             builder.Property(card => card.CVV2)
+                .IsRequired()
+                //.IsFixedLength()
                 .HasMaxLength(5);
 
             builder.HasIndex(card => card.ExpDate);

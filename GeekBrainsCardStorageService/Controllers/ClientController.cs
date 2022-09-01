@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
 namespace GeekBrainsCardStorageService.Controllers
 {
@@ -29,11 +30,11 @@ namespace GeekBrainsCardStorageService.Controllers
         [HttpGet("")]
         [ProducesResponseType(typeof(DtoClientResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ModelStateDictionary))]
-        public IActionResult GetAllClient()
+        public async Task<IActionResult> GetAllClient()
         {
             try
             {
-                return Ok(_repositoryClient.GetAll().Result);
+                return Ok(await _repositoryClient.GetAll());
             }
             catch (Exception e)
             {
@@ -47,11 +48,11 @@ namespace GeekBrainsCardStorageService.Controllers
         [HttpPost("")]
         [ProducesResponseType(typeof(DtoClientResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ModelStateDictionary))]
-        public IActionResult CreateClient(DtoClientRequestCreate card)
+        public async Task<IActionResult> CreateClient([FromBody] DtoClientRequestCreate card)
         {
             try
             {
-                return Ok(_repositoryClient.Create(_mapper.Map<Client>(card)).Result);
+                return Ok(await _repositoryClient.Create(_mapper.Map<Client>(card)));
             }
             catch (Exception e)
             {
@@ -60,14 +61,14 @@ namespace GeekBrainsCardStorageService.Controllers
             }
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("")]
         [ProducesResponseType(typeof(DtoClientResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ModelStateDictionary))]
-        public IActionResult DeleteClient(int Id)
+        public async Task<IActionResult> DeleteClient([FromBody] int Id)
         {
             try
             {
-                return Ok(_repositoryClient.Delete(Id).Result);
+                return Ok(await _repositoryClient.Delete(Id));
             }
             catch (Exception e)
             {

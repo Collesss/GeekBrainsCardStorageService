@@ -3,12 +3,12 @@ using GeekBrainsCardStorageService.Models.Dto.Card.Request;
 using GeekBrainsCardStorageService.Models.Dto.Client.Response;
 using GeekBrainsCardStorageService.Repository.Data;
 using GeekBrainsCardStorageService.Repository.Repository.Interface;
-using GeekBrainsCardStorageService.RepositoryDb.Repository.Implementation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
 namespace GeekBrainsCardStorageService.Controllers
 {
@@ -30,11 +30,29 @@ namespace GeekBrainsCardStorageService.Controllers
         [HttpGet("")]
         [ProducesResponseType(typeof(DtoClientResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ModelStateDictionary))]
-        public IActionResult GetAllCard()
+        public async Task<IActionResult> GetAllCard()
         {
             try
             {
-                return Ok(_repositoryCard.GetAll().Result);
+                return Ok(await _repositoryCard.GetAll());
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError(String.Empty, e.Message);
+                return BadRequest(ModelState);
+            }
+
+            //return Ok(new DtoClientResponse[] { new DtoClientResponse() });
+        }
+
+        [HttpGet("{Id}")]
+        [ProducesResponseType(typeof(DtoClientResponse), StatusCodes.Status200OK)]
+        [ProducesErrorResponseType(typeof(ModelStateDictionary))]
+        public async Task<IActionResult> GetAllClientCards([FromRoute] int Id)
+        {
+            try
+            {
+                return Ok(await _repositoryCard.GetCardsClient(Id));
             }
             catch (Exception e)
             {
@@ -48,11 +66,11 @@ namespace GeekBrainsCardStorageService.Controllers
         [HttpPost("")]
         [ProducesResponseType(typeof(DtoClientResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ModelStateDictionary))]
-        public IActionResult CreateCard(DtoCardRequestCreate card)
+        public async Task<IActionResult> CreateCard([FromBody] DtoCardRequestCreate card)
         {
             try
             {
-                return Ok(_repositoryCard.Create(_mapper.Map<Card>(card)).Result);
+                return Ok(await _repositoryCard.Create(_mapper.Map<Card>(card)));
             }
             catch (Exception e)
             {
@@ -66,11 +84,11 @@ namespace GeekBrainsCardStorageService.Controllers
         [HttpDelete("")]
         [ProducesResponseType(typeof(DtoClientResponse), StatusCodes.Status200OK)]
         [ProducesErrorResponseType(typeof(ModelStateDictionary))]
-        public IActionResult DeleteCard(Guid Id)
+        public async Task<IActionResult> DeleteCard([FromBody] Guid Id)
         {
             try
             {
-                return Ok(_repositoryCard.Delete(Id).Result);
+                return Ok(await _repositoryCard.Delete(Id));
             }
             catch (Exception e)
             {

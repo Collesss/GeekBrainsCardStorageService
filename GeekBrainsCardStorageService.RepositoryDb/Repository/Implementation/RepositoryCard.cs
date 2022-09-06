@@ -1,4 +1,5 @@
 ﻿using GeekBrainsCardStorageService.Repository.Data;
+using GeekBrainsCardStorageService.Repository.Exceptions;
 using GeekBrainsCardStorageService.Repository.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -18,27 +19,57 @@ namespace GeekBrainsCardStorageService.RepositoryDb.Repository.Implementation
 
         public async Task<Card> Create(Card entity)
         {
-            Card addedCard = (await _dbContext.Cards.AddAsync(entity)).Entity;
-            
-            await _dbContext.SaveChangesAsync();
+            Card addedCard = null;
+
+            try
+            {
+                addedCard = (await _dbContext.Cards.AddAsync(entity)).Entity;
+
+                await _dbContext.SaveChangesAsync();
+
+            }
+            catch (DbUpdateException e)
+            {
+                throw new RepositoryFieldExeption();
+            }
 
             return addedCard;
         }
 
         public async Task<Card> Update(Card entity)
         {
-            Card updateCard = _dbContext.Cards.Update(entity).Entity;
+            Card updateCard = null;
 
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                updateCard = _dbContext.Cards.Update(entity).Entity;
+
+                await _dbContext.SaveChangesAsync();
+
+            }
+            catch (DbUpdateException e)
+            {
+                throw new RepositoryFieldExeption();
+            }
 
             return updateCard;
         }
 
         public async Task<Card> Delete(Guid id)
         {
-            Card deleteCard = _dbContext.Cards.Remove(new Card { Id = id }).Entity;
+            Card deleteCard = null;
 
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                deleteCard = _dbContext.Cards.Remove(new Card { Id = id }).Entity;
+
+                await _dbContext.SaveChangesAsync();
+
+            }
+            catch (DbUpdateException e)
+            {
+                throw new RepositoryFieldExeption();
+            }
 
             return deleteCard;
         }

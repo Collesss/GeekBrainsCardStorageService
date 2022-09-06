@@ -1,4 +1,5 @@
 ﻿using GeekBrainsCardStorageService.Repository.Data;
+using GeekBrainsCardStorageService.Repository.Exceptions;
 using GeekBrainsCardStorageService.Repository.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -18,27 +19,54 @@ namespace GeekBrainsCardStorageService.RepositoryDb.Repository.Implementation
 
         public async Task<Client> Create(Client entity)
         {
-            Client addedClient = (await _dbContext.Clients.AddAsync(entity)).Entity;
+            Client addedClient = null;
 
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                addedClient = (await _dbContext.Clients.AddAsync(entity)).Entity;
+
+                await _dbContext.SaveChangesAsync();
+            }
+            catch(DbUpdateException e)
+            {
+                throw new RepositoryFieldExeption();
+            }
 
             return addedClient;
         }
 
         public async Task<Client> Update(Client entity)
         {
-            Client updateClient = _dbContext.Clients.Update(entity).Entity;
+            Client updateClient = null;
 
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                updateClient = _dbContext.Clients.Update(entity).Entity;
+
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new RepositoryFieldExeption();
+            }
 
             return updateClient;
         }
 
         public async Task<Client> Delete(int id)
         {
-            Client deleteClient = _dbContext.Clients.Remove(new Client { Id = id }).Entity;
+            Client deleteClient = null;
 
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                deleteClient = _dbContext.Clients.Remove(new Client { Id = id }).Entity;
+
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new RepositoryFieldExeption();
+            }
 
             return deleteClient;
         }

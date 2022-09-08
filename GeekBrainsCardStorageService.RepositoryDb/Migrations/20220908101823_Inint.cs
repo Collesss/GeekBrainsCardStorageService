@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GeekBrainsCardStorageService.RepositoryDb.Migrations
 {
-    public partial class Init : Migration
+    public partial class Inint : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,9 +15,9 @@ namespace GeekBrainsCardStorageService.RepositoryDb.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: true),
-                    Surname = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: true),
-                    Patronymic = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: true)
+                    FirstName = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: false),
+                    Patronymic = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,9 +29,9 @@ namespace GeekBrainsCardStorageService.RepositoryDb.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: true),
-                    CardNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    CVV2 = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: false),
+                    CardNumber = table.Column<string>(type: "nchar(16)", fixedLength: true, maxLength: 16, nullable: false),
+                    CVV2 = table.Column<string>(type: "nchar(3)", fixedLength: true, maxLength: 3, nullable: false),
                     ExpDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ClientId = table.Column<int>(type: "int", nullable: false)
                 },

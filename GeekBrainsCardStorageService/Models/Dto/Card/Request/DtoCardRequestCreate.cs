@@ -10,11 +10,11 @@ namespace GeekBrainsCardStorageService.Models.Dto.Card.Request
         public string Name { get; set; }
 
         [Required]
-        [StringLength(55)]
+        [RegularExpression(@"\d{16}")]
         public string CardNumber { get; set; }
 
         [Required]
-        [StringLength(5)]
+        [RegularExpression(@"\d{3}")]
         public string CVV2 { get; set; }
 
         [Required]

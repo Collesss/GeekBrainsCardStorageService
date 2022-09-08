@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GeekBrainsCardStorageService.RepositoryDb.Migrations
 {
     [DbContext(typeof(CardStorageServiceDbContext))]
-    [Migration("20220901203913_add_not_null")]
-    partial class add_not_null
+    [Migration("20220908101823_Inint")]
+    partial class Inint
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,13 +32,15 @@ namespace GeekBrainsCardStorageService.RepositoryDb.Migrations
 
                     b.Property<string>("CVV2")
                         .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasMaxLength(3)
+                        .HasColumnType("nchar(3)")
+                        .IsFixedLength();
 
                     b.Property<string>("CardNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(16)
+                        .HasColumnType("nchar(16)")
+                        .IsFixedLength();
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");

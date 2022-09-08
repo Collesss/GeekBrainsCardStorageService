@@ -30,13 +30,15 @@ namespace GeekBrainsCardStorageService.RepositoryDb.Migrations
 
                     b.Property<string>("CVV2")
                         .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasMaxLength(3)
+                        .HasColumnType("nchar(3)")
+                        .IsFixedLength();
 
                     b.Property<string>("CardNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(16)
+                        .HasColumnType("nchar(16)")
+                        .IsFixedLength();
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");

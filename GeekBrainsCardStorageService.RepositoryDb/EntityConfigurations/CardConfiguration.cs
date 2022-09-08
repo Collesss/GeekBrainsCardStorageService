@@ -10,10 +10,12 @@ namespace GeekBrainsCardStorageService.RepositoryDb.EntityConfigurations
         {
             builder.HasKey(card => card.Id);
 
+            //builder.HasCheckConstraint("CardNumber", @"CardNumber LIKE '\d{16}'");
             builder.HasAlternateKey(card => card.CardNumber);
             builder.Property(card => card.CardNumber)
                 .IsRequired()
-                .HasMaxLength(20);
+                .IsFixedLength()
+                .HasMaxLength(16);
 
             builder.Property(card => card.Name)
                 .IsRequired()
@@ -22,8 +24,8 @@ namespace GeekBrainsCardStorageService.RepositoryDb.EntityConfigurations
 
             builder.Property(card => card.CVV2)
                 .IsRequired()
-                //.IsFixedLength()
-                .HasMaxLength(5);
+                .IsFixedLength()
+                .HasMaxLength(3);
 
             builder.HasIndex(card => card.ExpDate);
 

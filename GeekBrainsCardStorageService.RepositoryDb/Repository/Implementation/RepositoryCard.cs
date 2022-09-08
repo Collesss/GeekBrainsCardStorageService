@@ -3,6 +3,7 @@ using GeekBrainsCardStorageService.Repository.Exceptions;
 using GeekBrainsCardStorageService.Repository.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Text.RegularExpressions;
 
 namespace GeekBrainsCardStorageService.RepositoryDb.Repository.Implementation
 {
@@ -23,6 +24,13 @@ namespace GeekBrainsCardStorageService.RepositoryDb.Repository.Implementation
 
             try
             {
+                if(!Regex.IsMatch(entity.CardNumber, @"\d{16}"))
+                    throw new RepositoryFieldExeption("CardNumber", ErrorCodeRepositoryEnum.StingNotMatchFormat, "Card");
+
+                if (!Regex.IsMatch(entity.CVV2, @"\d{3}"))
+                    throw new RepositoryFieldExeption("CVV2", ErrorCodeRepositoryEnum.StingNotMatchFormat, "Card");
+
+
                 addedCard = (await _dbContext.Cards.AddAsync(entity)).Entity;
 
                 await _dbContext.SaveChangesAsync();

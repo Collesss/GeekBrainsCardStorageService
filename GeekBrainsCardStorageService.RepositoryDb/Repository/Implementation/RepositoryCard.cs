@@ -38,6 +38,7 @@ namespace GeekBrainsCardStorageService.RepositoryDb.Repository.Implementation
             }
             catch (DbUpdateException e)
             {
+                
                 throw new RepositoryFieldExeption();
             }
 
